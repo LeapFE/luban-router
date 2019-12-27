@@ -1,0 +1,50 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "CommonJS",
+    "outDir": "dist",
+    "lib": [
+      "DOM",
+      "ES6"
+    ],
+    "jsx": "react",
+    "declaration": true,
+    "declarationDir": "dist",
+    // "sourceMap": true,
+
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": false,
+    "noImplicitThis": true,
+    "alwaysStrict": false,
+    "skipDefaultLibCheck": true,
+
+    /* Additional Checks */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* Module Resolution Options */
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    "paths": {
+      "*": ["./node_modules/*/index"]
+    },
+    "typeRoots": ["./typings", "./node_modules/@types"],
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+
+    "inlineSourceMap": true,
+    "inlineSources": true,
+
+    // "experimentalDecorators": false,
+    // "emitDecoratorMetadata": false,
+    "downlevelIteration": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules/**", "dist/**"]
+}
