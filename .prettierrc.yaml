@@ -1,7 +1,7 @@
 # https://prettier.io/docs/en/ignore.html
 
 trailingComma: "all"
-printWidth: 120
+printWidth: 100
 arrowParens: "always"
 jsxBracketSameLine: false
 endOfLine: "lf"

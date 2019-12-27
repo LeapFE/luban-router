@@ -25,12 +25,12 @@ function createRouterTable(routes: Array<RouteItem>): Array<ReactElement> {
   return table;
 }
 
-interface LubanRouterPropsProps {
+interface LubanRouterProps {
   routes: Array<RouteItem>;
 }
 
-const LubanRouterProps: FunctionComponent<LubanRouterPropsProps> = ({ routes }) => (
+const LubanRouter: FunctionComponent<LubanRouterProps> = ({ routes }) => (
   <Switch>{createRouterTable(routes)}</Switch>
 );
 
-export { LubanRouterProps };
+export { LubanRouter };

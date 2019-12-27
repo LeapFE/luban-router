@@ -1,5 +1,5 @@
-import { LubanRouterProps } from "./table";
+import { LubanRouter } from "./table";
 
-export { LubanRouterProps };
+export { LubanRouter };
 
-export default LubanRouterProps;
+export default LubanRouter;
