@@ -1,6 +1,8 @@
 import React, { ComponentType, ReactElement, FunctionComponent } from "react";
 import { RouteComponentProps, Switch, Route } from "react-router-dom";
 
+import { flattenRoutes } from "./util";
+
 export interface RouteItem {
   name?: string;
   path: string;
@@ -30,7 +32,7 @@ interface LubanRouterProps {
 }
 
 const LubanRouter: FunctionComponent<LubanRouterProps> = ({ routes }) => (
-  <Switch>{createRouterTable(routes)}</Switch>
+  <Switch>{createRouterTable(flattenRoutes(routes))}</Switch>
 );
 
 export { LubanRouter };
