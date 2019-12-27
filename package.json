@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "a configurable routing solution for react app",
   "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "directories": {
     "example": "example",
     "test": "test"
@@ -13,7 +14,7 @@
     "check-type": "tsc --noEmit",
     "format": "prettier --write src/**/*.{ts,tsx}",
     "clean": "rm -rf dist",
-    "pre:release": "npm run clean && npm run test && npm run eslint",
+    "pre:release": "npm run clean && npm run format && npm run eslint",
     "build": "npm run clean && cross-env NODE_ENV=production tsc"
   },
   "repository": {
@@ -47,6 +48,8 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-react-hooks": "^1.7.0",
+    "husky": "^3.1.0",
+    "lint-staged": "^9.5.0",
     "prettier": "^1.19.1",
     "typescript": "^3.7.4"
   },
@@ -54,5 +57,17 @@
     "react": ">=16.8.0",
     "react-router-dom": ">=5.0.0"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "npm run eslint",
+      "npm run format",
+      "git add"
+    ]
+  }
 }
