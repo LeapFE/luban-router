@@ -1,6 +1,11 @@
 {
   "parser": "@typescript-eslint/parser",
-  "extends": ["plugin:react/recommended", "plugin:@typescript-eslint/recommended", "plugin:prettier/recommended", "airbnb"],
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "airbnb"
+  ],
   "plugins": ["@typescript-eslint", "react"],
   "env": {
     "browser": true,
@@ -20,10 +25,18 @@
     }
   },
   "rules": {
+    "prettier/prettier": "off",
     "quotes": ["error", "double"],
     "import/no-unresolved": ["off"],
     "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }],
     "react/prop-types": "off",
-    "import/extensions": "off"
+    "import/extensions": "off",
+    "max-len": ["error", { "code": 100, "tabWidth": 2, "ignoreComments": true }],
+    "import/prefer-default-export": "off",
+    "operator-linebreak": "off",
+    "object-curly-newline": "off",
+    "react/jsx-indent": "off",
+    "indent": "off",
+    "arrow-body-style": "off"
   }
 }

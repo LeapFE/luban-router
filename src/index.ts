@@ -1,4 +1,4 @@
-import { LubanRouter } from "./table";
+import { LubanRouter } from "./router";
 
 export { LubanRouter };
 
