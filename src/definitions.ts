@@ -3,7 +3,7 @@
 // Definitions by: front-end-captain <https://github.com/front-end-captain>
 // TypeScript Version: 3.6.3
 
-import { ComponentType } from "react";
+import { ComponentType, LazyExoticComponent } from "react";
 import { RouteComponentProps } from "react-router-dom";
 
 type RouteMode = "browser" | "hash";
@@ -69,10 +69,13 @@ export interface BasicRouterItem {
 
   /**
    * @description path to rendered view component
-   * @type {ComponentType<RouteComponentProps<any>> | ComponentType<any>}
+   * @type {ComponentType<RouteComponentProps<any>> | ComponentType<any> | LazyExoticComponent<any>}
    * @default {} () => null;
    */
-  component?: ComponentType<RouteComponentProps<any>> | ComponentType<any>;
+  component?:
+    | ComponentType<RouteComponentProps<any>>
+    | ComponentType<any>
+    | LazyExoticComponent<any>;
   /**
    * @description roles that can access this route
    * @type {Array<string | number>}

@@ -1,4 +1,4 @@
-import React, { ReactElement, FunctionComponent, useMemo, ComponentType } from "react";
+import React, { ReactElement, FunctionComponent, useMemo, Suspense } from "react";
 import { Switch, BrowserRouter, HashRouter } from "react-router-dom";
 
 import { RouteConfig, BasicRouterItem } from "./definitions";
@@ -10,39 +10,40 @@ import { createRouterTable } from "./createRouterTable";
 interface LubanRouterProps {
   config: RouteConfig;
   role?: string | number | Array<string | number>;
-  customRender?: (table: ReactElement, routes: Array<BasicRouterItem>) => ReactElement;
-  notFound?: ComponentType<any>;
+  notFound?: ReactElement;
+  children?: (table: ReactElement, routes: Array<BasicRouterItem>) => ReactElement;
 }
 
-const LubanRouter: FunctionComponent<LubanRouterProps> = ({
-  config,
-  customRender,
-  role,
-  notFound,
-}) => {
+const LubanRouter: FunctionComponent<LubanRouterProps> = ({ config, role, children, notFound }) => {
   const { routes, mode = "browser", basename = "/", hashType = "slash" } = config;
 
   const flattenRouteList = useMemo(() => flattenRoutes(routes), [routes]);
 
   const renderRouter =
     mode === "browser"
-      ? (children: ReactElement) => <BrowserRouter basename={basename}>{children}</BrowserRouter>
-      : (children: ReactElement) => (
+      ? (child: ReactElement): ReactElement => (
+          <BrowserRouter basename={basename}>{child}</BrowserRouter>
+        )
+      : (child: ReactElement): ReactElement => (
           <HashRouter hashType={hashType} basename={basename}>
-            {children}
+            {child}
           </HashRouter>
         );
 
-  if (typeof customRender === "function") {
-    return renderRouter(
-      customRender(
-        <Switch>{createRouterTable(flattenRouteList, role, notFound)}</Switch>,
-        flattenRouteList,
-      ),
+  let routerTable = (
+    <Suspense fallback={<span>loading</span>}>
+      <Switch>{createRouterTable(flattenRouteList, role, notFound)}</Switch>
+    </Suspense>
+  );
+
+  if (typeof children === "function") {
+    routerTable = children(
+      <Switch>{createRouterTable(flattenRouteList, role, notFound)}</Switch>,
+      flattenRouteList,
     );
   }
 
-  return renderRouter(<Switch>{createRouterTable(flattenRouteList, role, notFound)}</Switch>);
+  return renderRouter(routerTable);
 };
 
 export { LubanRouter };

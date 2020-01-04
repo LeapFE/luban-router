@@ -1,7 +1,7 @@
-import React, { ReactElement, isValidElement, ComponentType } from "react";
+import React, { ReactElement, isValidElement } from "react";
 import { Route } from "react-router-dom";
 
-import { Default404NotFound } from "./default404";
+import { DefaultNotFound } from "./defaultNotFound";
 
 import { NestedRouteItem } from "./definitions";
 
@@ -10,7 +10,8 @@ function checkAuthority(
   role: string | number | Array<string | number>,
 ): boolean {
   if (Array.isArray(role)) {
-    return authority.some((item, index) => item === role[index]);
+    const roleSet = new Set(role);
+    return authority.filter((item) => roleSet.has(item)).length > 0;
   }
 
   return authority.includes(role);
@@ -19,7 +20,7 @@ function checkAuthority(
 function createRouterTable(
   routes: Array<NestedRouteItem>,
   role?: string | number | Array<string | number>,
-  NotFound?: ComponentType<any>,
+  NotFound?: ReactElement,
 ): Array<ReactElement> {
   const table: ReactElement[] = [];
 
@@ -49,7 +50,7 @@ function createRouterTable(
       path="*"
       key="*"
       exact
-      render={() => (isValidElement(NotFound) ? <NotFound /> : <Default404NotFound />)}
+      render={(): ReactElement => (isValidElement(NotFound) ? NotFound : <DefaultNotFound />)}
     />,
   );
 
