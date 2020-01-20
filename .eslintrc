@@ -37,6 +37,7 @@
     "object-curly-newline": "off",
     "react/jsx-indent": "off",
     "indent": "off",
-    "arrow-body-style": "off"
+    "arrow-body-style": "off",
+    "react/jsx-props-no-spreading": "off"
   }
 }

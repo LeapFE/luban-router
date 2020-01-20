@@ -1,6 +1,6 @@
 {
   "name": "luban-router",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "a configurable routing solution for react app",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -24,7 +24,7 @@
   "keywords": [
     "router",
     "react",
-    "configurabl"
+    "configurable"
   ],
   "author": "front-end-captain",
   "license": "MIT",
@@ -33,6 +33,7 @@
   },
   "homepage": "https://github.com/front-end-captain/luban-router#readme",
   "devDependencies": {
+    "@types/path-to-regexp": "^1.7.0",
     "@types/react": "^16.9.17",
     "@types/react-router-dom": "^5.1.3",
     "@typescript-eslint/eslint-plugin": "^2.13.0",
@@ -55,9 +56,9 @@
   },
   "peerDependencies": {
     "react": ">=16.8.0",
-    "react-router-dom": ">=5.0.0"
+    "react-router-dom": ">=5.0.0",
+    "path-to-regexp": "^6.1.0"
   },
-  "dependencies": {},
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
