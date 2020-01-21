@@ -1,5 +1,5 @@
 ## Luban-router
-基于 [react-router](https://reacttraining.com/react-router/web/guides/quick-start) 的并提供路由鉴权、菜单导航的配置式静态路由管理器。
+🦌 基于 [react-router](https://reacttraining.com/react-router/web/guides/quick-start) 的并提供路由鉴权、菜单导航的配置式静态路由管理器。
 
 > ⚠️ `luban-router` 创建的路由均为静态路由，所以若是有创建动态路由的需求，`luban-router` 并不适合。另外在路由配置中提到的【子路由】也是一个伪概念，只是表示一种菜单导航上的层级关系。在内部实现时，最终会将这种嵌套结构拍平。
 
