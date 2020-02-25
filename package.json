@@ -57,9 +57,12 @@
     "typescript": "^3.7.4"
   },
   "peerDependencies": {
-    "react": ">=16.8.0",
+    "react": ">=16.8.0"
+  },
+  "dependencies": {
     "react-router-dom": ">=5.0.0",
-    "path-to-regexp": "^6.1.0"
+    "path-to-regexp": "^6.1.0",
+    "@types/react-router-dom": "^5.1.2"
   },
   "husky": {
     "hooks": {
