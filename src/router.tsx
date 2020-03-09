@@ -4,7 +4,7 @@ import { pathToRegexp } from "path-to-regexp";
 
 import { flattenRoutes, filterUnPermissionRoute } from "./util";
 import { createRouterTable } from "./createRouterTable";
-import { DefaultNotFound } from "./defaultNotFound";
+import { DefaultNotFound } from "./defaultNotfound";
 
 import {
   NestedRouteItem,
