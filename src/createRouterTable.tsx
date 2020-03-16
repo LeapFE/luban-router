@@ -1,4 +1,4 @@
-import React, { ReactElement, isValidElement, ComponentType } from "react";
+import React, { ReactElement, isValidElement, ComponentType, createElement } from "react";
 import { Route, RouteComponentProps, Redirect, RedirectProps } from "react-router-dom";
 
 import { NestedRouteItem, Role, CustomCheckAuthority } from "./definitions";
@@ -91,7 +91,7 @@ function createRouterTable(
 
     // Component is not undefined, check it valid element
     if (Component !== undefined) {
-      if (!isValidElement(Component)) {
+      if (!isValidElement(createElement(Component, null))) {
         console.error(`path ${path} mapping component is not a valid React Element`);
         return;
       }
