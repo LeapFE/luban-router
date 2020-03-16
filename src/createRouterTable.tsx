@@ -1,62 +1,111 @@
 import React, { ReactElement, isValidElement, ComponentType } from "react";
-import { Route, RouteComponentProps, Redirect } from "react-router-dom";
+import { Route, RouteComponentProps, Redirect, RedirectProps } from "react-router-dom";
 
-import { NestedRouteItem, Role } from "./definitions";
+import { NestedRouteItem, Role, CustomCheckAuthority } from "./definitions";
 
 import { checkAuthority } from "./util";
+
+function generateRedirectRouteProps(
+  route: NestedRouteItem,
+  defaultUnAuthorityPath: string,
+): RedirectProps & { key: string } {
+  const { component: Component, redirect, path, exact, strict } = route;
+
+  let toPath = redirect || defaultUnAuthorityPath;
+  let routeKey = `${path}-${redirect}`;
+
+  if (Component === undefined) {
+    toPath = defaultUnAuthorityPath;
+    routeKey = `${path}-${defaultUnAuthorityPath}`;
+  }
+
+  return {
+    key: routeKey,
+    to: toPath,
+    exact,
+    strict,
+    from: path,
+  };
+}
 
 function renderRouteComponent(
   route: NestedRouteItem,
   props: RouteComponentProps<any>,
+  authorityChecker: CustomCheckAuthority,
   role?: Role,
 ): ReactElement {
-  const { component: Component, authority, redirect, meta } = route;
+  const {
+    component: Component,
+    authority,
+    unAuthorityPath,
+    meta,
+    redirect,
+    path,
+  } = route;
 
-  let redirectPath = "/404";
-
-  if (typeof Component === "undefined") {
-    return <Redirect to={redirectPath} />;
-  }
-
-  if (isValidElement(Component)) {
-    return <Redirect to={redirectPath} />;
-  }
+  let defaultUnAuthorityPath = "/404";
 
   if (typeof role === "undefined") {
+    if (Component === undefined || typeof redirect === "string") {
+      return (
+        <Redirect {...generateRedirectRouteProps(route, defaultUnAuthorityPath)} />
+      );
+    }
+
     return <Component {...props} meta={meta} />;
   }
 
-  if (checkAuthority(role, authority)) {
+  if (authorityChecker(role, authority)) {
+    if (Component === undefined || typeof redirect === "string") {
+      return (
+        <Redirect {...generateRedirectRouteProps(route, defaultUnAuthorityPath)} />
+      );
+    }
+
     return <Component {...props} meta={meta} />;
   }
 
-  if (typeof redirect === "string") {
-    redirectPath = redirect;
+  if (typeof unAuthorityPath === "string") {
+    defaultUnAuthorityPath = unAuthorityPath;
   }
-  if (typeof redirect === "function") {
-    redirectPath = redirect(role);
+
+  if (typeof unAuthorityPath === "function") {
+    defaultUnAuthorityPath = unAuthorityPath(role);
   }
-  return <Redirect to={redirectPath} />;
+
+  return (
+    <Redirect key={`${path}-${defaultUnAuthorityPath}`} from={path} to={defaultUnAuthorityPath} />
+  );
 }
+
+type createRouterTableOptions = {
+  role?: Role;
+  NotFound?: ComponentType<any>;
+  customCheckAuthority?: CustomCheckAuthority;
+};
 
 function createRouterTable(
   routes: Array<NestedRouteItem>,
-  role?: Role,
-  NotFound?: ComponentType<any>,
+  options: createRouterTableOptions,
 ): Array<ReactElement> {
+  const { role, NotFound, customCheckAuthority } = options;
+
   const table: ReactElement[] = [];
 
   const reversedRoutes: Array<NestedRouteItem> = Array.from(routes).reverse();
 
+  const authorityChecker =
+    typeof customCheckAuthority === "function" ? customCheckAuthority : checkAuthority;
+
   reversedRoutes.forEach((route) => {
     const { path, component: Component, exact = true, strict = true } = route;
 
-    if (typeof Component === "undefined") {
-      return;
-    }
-
-    if (isValidElement(Component)) {
-      return;
+    // Component is not undefined, check it valid element
+    if (Component !== undefined) {
+      if (!isValidElement(Component)) {
+        console.error(`path ${path} mapping component is not a valid React Element`);
+        return;
+      }
     }
 
     if (route.path.includes("404")) {
@@ -70,7 +119,7 @@ function createRouterTable(
         path={path}
         strict={strict}
         render={(props: RouteComponentProps): ReactElement => {
-          return renderRouteComponent(route, props, role);
+          return renderRouteComponent(route, props, authorityChecker, role);
         }}
       />
     );

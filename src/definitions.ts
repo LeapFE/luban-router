@@ -1,7 +1,7 @@
-// Type definitions for LubanRouter 0.0.1
+// Type definitions for LubanRouter 1.0.0
 // Project: https://github.com/front-end-captain/luban-router
 // Definitions by: front-end-captain <https://github.com/front-end-captain>
-// TypeScript Version: 3.6.3
+// TypeScript Version: 3.7.4
 
 import { ComponentType, LazyExoticComponent, ReactElement } from "react";
 import { RouteComponentProps } from "react-router-dom";
@@ -27,6 +27,8 @@ export type HashType = "slash" | "noslash" | "hashbang";
  * @description user role of application
  */
 export type Role = string | number | Array<string | number>;
+
+export type Authority = Array<string | number>;
 
 export interface RouteConfig {
   /**
@@ -67,11 +69,18 @@ export interface BasicRouterItem {
    * @default {string} ""
    */
   name?: string;
+
   /**
    * @description route path
    * @type {string}
    */
   path: string;
+
+  /**
+   * @description redirect path
+   * @type string
+   */
+  redirect?: string;
 
   /**
    * @description When true, will only match if the path matches the location.pathname exactly
@@ -102,14 +111,14 @@ export interface BasicRouterItem {
    * @type {Array<string | number>}
    * @default {Array} []
    */
-  authority?: Array<string | number>;
+  authority?: Authority;
 
   /**
-   * @description redirect path when access unauthority route
+   * @description redirect path when access no authority route
    * if this value is undefined, will redirect to 404 page when access route
    * @type {string | Function}
    */
-  redirect?: string | ((role: Role) => string);
+  unAuthorityPath?: string | ((role: Role) => string);
 
   /**
    * @description this route's icon
@@ -136,7 +145,7 @@ export interface MatchedRouterItem extends BasicRouterItem {
 
 type customRendererParams = {
   /**
-   * @description 已经渲染好的路由表
+   * @description rendered router table, can use it directly
    */
   renderedTable: ReactElement<any>;
   /**
@@ -149,10 +158,21 @@ type customRendererParams = {
   permissionRouteList: Array<NestedRouteItem>;
 };
 
-type customRenderer = (params: customRendererParams) => ReactElement;
+export interface CustomRenderer {
+  (params: customRendererParams): ReactElement;
+}
+
+export interface CustomCheckAuthority {
+  (role: Role, authority?: Authority | undefined): boolean;
+}
 
 export interface LubanRouterProps {
+  // route config
   config: RouteConfig;
+  // role of app
   role?: Role;
-  children?: customRenderer;
+  // custom render callback. implement app layout、nav、breadcrumbs and so on
+  children?: CustomRenderer;
+  // custom authority checker
+  customCheckAuthority?: CustomCheckAuthority;
 }

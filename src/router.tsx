@@ -13,6 +13,7 @@ import {
   BasicRouterItem,
   Role,
   MatchedRouterItem,
+  CustomCheckAuthority,
 } from "./definitions";
 
 function useMatchedRouteList(routeList: Array<BasicRouterItem>): Array<MatchedRouterItem> {
@@ -68,6 +69,7 @@ interface RouterTableProps {
   notFoundComponent: RouteComponent;
   role?: Role;
   customRender?: LubanRouterProps["children"];
+  customCheckAuthority?: CustomCheckAuthority;
 }
 const RouterTable: FunctionComponent<RouterTableProps> = ({
   flattenRouteList,
@@ -75,8 +77,13 @@ const RouterTable: FunctionComponent<RouterTableProps> = ({
   notFoundComponent,
   role,
   customRender,
+  customCheckAuthority,
 }) => {
-  const routerTable = createRouterTable(flattenRouteList, role, notFoundComponent);
+  const routerTable = createRouterTable(flattenRouteList, {
+    role,
+    NotFound: notFoundComponent,
+    customCheckAuthority,
+  });
 
   const matchedRouteList = useMatchedRouteList(flattenRouteList);
 
@@ -102,7 +109,12 @@ const RouterTable: FunctionComponent<RouterTableProps> = ({
   return appRouter;
 };
 
-const LubanRouter: FunctionComponent<LubanRouterProps> = ({ config, role, children }) => {
+const LubanRouter: FunctionComponent<LubanRouterProps> = ({
+  config,
+  role,
+  children,
+  customCheckAuthority,
+}) => {
   const { routes, mode = "browser", basename = "/", hashType = "slash" } = config;
 
   const flattenRouteList = useMemo(() => flattenRoutes(routes), [routes]);
@@ -117,6 +129,7 @@ const LubanRouter: FunctionComponent<LubanRouterProps> = ({ config, role, childr
     flattenRouteList,
     role,
     notFoundComponent,
+    customCheckAuthority,
   };
 
   return mode === "browser" ? (
