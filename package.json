@@ -1,6 +1,6 @@
 {
   "name": "luban-router",
-  "version": "0.0.8",
+  "version": "1.0.0",
   "description": "a configurable routing solution for react app",
   "main": "lib/index.js",
   "module": "es/index.js",
