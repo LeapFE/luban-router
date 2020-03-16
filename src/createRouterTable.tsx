@@ -34,22 +34,13 @@ function renderRouteComponent(
   authorityChecker: CustomCheckAuthority,
   role?: Role,
 ): ReactElement {
-  const {
-    component: Component,
-    authority,
-    unAuthorityPath,
-    meta,
-    redirect,
-    path,
-  } = route;
+  const { component: Component, authority, unAuthorityPath, meta, redirect, path } = route;
 
   let defaultUnAuthorityPath = "/404";
 
   if (typeof role === "undefined") {
     if (Component === undefined || typeof redirect === "string") {
-      return (
-        <Redirect {...generateRedirectRouteProps(route, defaultUnAuthorityPath)} />
-      );
+      return <Redirect {...generateRedirectRouteProps(route, defaultUnAuthorityPath)} />;
     }
 
     return <Component {...props} meta={meta} />;
@@ -57,9 +48,7 @@ function renderRouteComponent(
 
   if (authorityChecker(role, authority)) {
     if (Component === undefined || typeof redirect === "string") {
-      return (
-        <Redirect {...generateRedirectRouteProps(route, defaultUnAuthorityPath)} />
-      );
+      return <Redirect {...generateRedirectRouteProps(route, defaultUnAuthorityPath)} />;
     }
 
     return <Component {...props} meta={meta} />;
