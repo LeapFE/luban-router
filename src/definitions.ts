@@ -1,6 +1,6 @@
 // Type definitions for LubanRouter 1.0.0
-// Project: https://github.com/front-end-captain/luban-router
-// Definitions by: front-end-captain <https://github.com/front-end-captain>
+// Project: https://github.com/LeapFE/luban-router
+// Definitions by: front-end-captain <https://github.com/LeapFE>
 // TypeScript Version: 3.7.4
 
 import { ComponentType, LazyExoticComponent, ReactElement } from "react";

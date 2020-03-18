@@ -5,7 +5,10 @@
   "main": "lib/index.js",
   "module": "es/index.js",
   "typings": "lib/index.d.ts",
-  "files": ["es/", "lib/"],
+  "files": [
+    "es/",
+    "lib/"
+  ],
   "scripts": {
     "test": "npm run test",
     "eslint": "eslint src/**/*.{ts,tsx}",
@@ -20,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/front-end-captain/luban-router.git"
+    "url": "git+https://github.com/LeapFE/luban-router.git"
   },
   "keywords": [
     "router",
@@ -30,9 +33,9 @@
   "author": "front-end-captain",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/front-end-captain/luban-router/issues"
+    "url": "https://github.com/LeapFE/luban-router/issues"
   },
-  "homepage": "https://github.com/front-end-captain/luban-router#readme",
+  "homepage": "https://github.com/LeapFE/luban-router#readme",
   "devDependencies": {
     "@types/path-to-regexp": "^1.7.0",
     "@types/react": "^16.9.17",
