@@ -14,7 +14,7 @@ function generateRedirectRouteProps(
   let toPath = redirect || defaultUnAuthorityPath;
   let routeKey = `${path}-${redirect}`;
 
-  if (Component === undefined) {
+  if (Component === undefined && redirect === undefined) {
     toPath = defaultUnAuthorityPath;
     routeKey = `${path}-${defaultUnAuthorityPath}`;
   }

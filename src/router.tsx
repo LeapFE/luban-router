@@ -93,7 +93,7 @@ const RouterTable: FunctionComponent<RouterTableProps> = ({
     </Suspense>
   );
 
-  let permissionRouteList: Array<NestedRouteItem> = [];
+  let permissionRouteList: Array<NestedRouteItem> = routeList;
   if (role) {
     permissionRouteList = filterUnPermissionRoute(routeList, role);
   }
