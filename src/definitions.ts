@@ -9,9 +9,9 @@ import { RouteComponentProps } from "react-router-dom";
 export type RouteMetaData = Record<string | number | symbol, any>;
 
 type DefaultRouteProps = { meta?: RouteMetaData } & RouteComponentProps<any>;
-export type RouteComponent =
-  | ComponentType<DefaultRouteProps>
-  | LazyExoticComponent<ComponentType<DefaultRouteProps>>;
+export type RouteComponent<P extends DefaultRouteProps = any> =
+  | ComponentType<P>
+  | LazyExoticComponent<ComponentType<P>>;
 
 /**
  * @description uses the HTML5 history API or uses the hash portion of the URL
