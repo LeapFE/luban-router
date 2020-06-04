@@ -1,7 +1,7 @@
-// Type definitions for LubanRouter 1.0.0
+// Type definitions for LubanRouter 1.1.0
 // Project: https://github.com/LeapFE/luban-router
 // Definitions by: front-end-captain <https://github.com/LeapFE>
-// TypeScript Version: 3.7.4
+// TypeScript Version: 3.8.3
 
 import { ComponentType, LazyExoticComponent, ReactElement } from "react";
 import { RouteComponentProps } from "react-router-dom";
@@ -149,11 +149,11 @@ type customRendererParams = {
    */
   renderedTable: ReactElement<any>;
   /**
-   * @description 与当前路径匹配的路由集合，可用于创建面包屑导航
+   * @description route list that matched with current path
    */
   matchedRouteList: Array<MatchedRouterItem>;
   /**
-   * @description 当前角色可访问的路由列表(嵌套结构)
+   * @description route list that current role can visit
    */
   permissionRouteList: Array<NestedRouteItem>;
 };

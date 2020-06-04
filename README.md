@@ -1,4 +1,4 @@
 # Luban-router
 
-移步 https://luban.now.sh/document/router.html
+see https://luban.now.sh/document/router.html
 
