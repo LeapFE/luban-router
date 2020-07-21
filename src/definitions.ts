@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 // Type definitions for LubanRouter 1.1.0
 // Project: https://github.com/LeapFE/luban-router
 // Definitions by: front-end-captain <https://github.com/LeapFE>
@@ -5,11 +6,18 @@
 
 import { ComponentType, LazyExoticComponent, ReactElement } from "react";
 import { RouteComponentProps } from "react-router-dom";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { StaticContext } from "react-router";
 
-export type RouteMetaData = Record<string | number | symbol, any>;
+export interface EnhancedRouteComponentProps<
+  M extends Record<PropertyKey, any> = {},
+  Params extends { [K in keyof Params]?: string } = {},
+  C extends StaticContext = StaticContext
+> extends RouteComponentProps<Params, C> {
+  meta: M;
+}
 
-type DefaultRouteProps = { meta?: RouteMetaData } & RouteComponentProps<any>;
-export type RouteComponent<P extends DefaultRouteProps = any> =
+export type RouteComponent<P extends EnhancedRouteComponentProps = any> =
   | ComponentType<P>
   | LazyExoticComponent<ComponentType<P>>;
 
@@ -129,7 +137,7 @@ export interface BasicRouterItem {
   /**
    * @description route meta data, will pass to route component props
    */
-  meta?: Record<string | number | symbol, any>;
+  meta?: Record<PropertyKey, any>;
 }
 
 export interface NestedRouteItem extends BasicRouterItem {
