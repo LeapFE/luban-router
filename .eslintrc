@@ -38,6 +38,7 @@
     "react/jsx-indent": "off",
     "indent": "off",
     "arrow-body-style": "off",
-    "react/jsx-props-no-spreading": "off"
+    "react/jsx-props-no-spreading": "off",
+    "@typescript-eslint/ban-types": "off"
   }
 }

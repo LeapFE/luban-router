@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-types */
-// Type definitions for LubanRouter 1.1.0
+// Type definitions for LubanRouter 1.2.0
 // Project: https://github.com/LeapFE/luban-router
 // Definitions by: front-end-captain <https://github.com/LeapFE>
 // TypeScript Version: 3.8.3
@@ -14,7 +13,7 @@ export interface EnhancedRouteComponentProps<
   Params extends { [K in keyof Params]?: string } = {},
   C extends StaticContext = StaticContext
 > extends RouteComponentProps<Params, C> {
-  meta: M;
+  meta?: M;
 }
 
 export type RouteComponent<P extends EnhancedRouteComponentProps = any> =
