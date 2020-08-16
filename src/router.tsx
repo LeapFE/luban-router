@@ -19,7 +19,7 @@ import {
 function useMatchedRouteList(routeList: Array<BasicRouterItem>): Array<MatchedRouterItem> {
   const { pathname } = useLocation();
 
-  let pathSnippets = pathname.split("/");
+  let pathSnippets = pathname.split("/").filter((p) => !!p);
 
   if (pathname !== "/") {
     pathSnippets = pathname.split("/").filter((i) => i);
