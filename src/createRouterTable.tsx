@@ -1,7 +1,7 @@
-import React, { ReactElement, isValidElement, ComponentType, createElement } from "react";
+import React, { ReactElement, isValidElement, createElement } from "react";
 import { Route, RouteComponentProps, Redirect, RedirectProps } from "react-router-dom";
 
-import { NestedRouteItem, Role, CustomCheckAuthority } from "./definitions";
+import { NestedRouteItem, Role, CustomCheckAuthority, RouteComponent } from "./definitions";
 
 import { checkAuthority } from "./util";
 
@@ -69,7 +69,7 @@ function renderRouteComponent(
 
 type createRouterTableOptions = {
   role?: Role;
-  NotFound?: ComponentType;
+  NotFound?: RouteComponent;
   customCheckAuthority?: CustomCheckAuthority;
 };
 

@@ -1,15 +1,25 @@
-// Type definitions for LubanRouter 1.1.0
+// Type definitions for LubanRouter 1.2.0
 // Project: https://github.com/LeapFE/luban-router
 // Definitions by: front-end-captain <https://github.com/LeapFE>
 // TypeScript Version: 3.8.3
 
 import { ComponentType, LazyExoticComponent, ReactElement } from "react";
 import { RouteComponentProps } from "react-router-dom";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { StaticContext } from "react-router";
+
+export interface EnhancedRouteComponentProps<
+  M extends Record<PropertyKey, string> = {},
+  Params extends { [K in keyof Params]?: string } = {},
+  C extends StaticContext = StaticContext
+> extends RouteComponentProps<Params, C> {
+  meta?: M;
+}
 
 export type RouteMetaData = Record<string | number | symbol, unknown>;
 
 type DefaultRouteProps = { meta?: RouteMetaData } & RouteComponentProps<Record<string, string>>;
-export type RouteComponent<P extends DefaultRouteProps = DefaultRouteProps> =
+export type RouteComponent<P = DefaultRouteProps> =
   | ComponentType<P>
   | LazyExoticComponent<ComponentType<P>>;
 
