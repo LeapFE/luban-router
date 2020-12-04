@@ -10,11 +10,12 @@
     "lib/"
   ],
   "scripts": {
-    "test": "npm run test",
     "eslint": "eslint src/**/*.{ts,tsx}",
     "compile": "tsc --noEmit --diagnostics",
     "format": "prettier --write src/**/*.{ts,tsx}",
     "clean": "rimraf es && rimraf lib",
+    "release:pre": "np prerelease --tag=beta --yolo --no-2fa --any-branch",
+    "release:prod": "np patch --tag=latest --yolo --no-2fa --branch=master",
     "pre:release": "npm run clean && npm run format && npm run eslint",
     "prepublishOnly": "npm run build",
     "build": "npm run build:es && npm run build:cjs",
@@ -79,5 +80,9 @@
       "npm run format",
       "git add"
     ]
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   }
 }
