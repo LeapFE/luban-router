@@ -17,9 +17,8 @@ export interface EnhancedRouteComponentProps<
 }
 
 export type RouteMetaData = Record<string | number | symbol, unknown>;
-
-type DefaultRouteProps = { meta?: RouteMetaData } & RouteComponentProps<Record<string, string>>;
-export type RouteComponent<P = DefaultRouteProps> =
+type DefaultRouteProps = { meta?: RouteMetaData } & RouteComponentProps<any>;
+export type RouteComponent<P extends DefaultRouteProps = any> =
   | ComponentType<P>
   | LazyExoticComponent<ComponentType<P>>;
 
