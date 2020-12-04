@@ -6,10 +6,10 @@
 import { ComponentType, LazyExoticComponent, ReactElement } from "react";
 import { RouteComponentProps } from "react-router-dom";
 
-export type RouteMetaData = Record<string | number | symbol, any>;
+export type RouteMetaData = Record<string | number | symbol, unknown>;
 
-type DefaultRouteProps = { meta?: RouteMetaData } & RouteComponentProps<any>;
-export type RouteComponent<P extends DefaultRouteProps = any> =
+type DefaultRouteProps = { meta?: RouteMetaData } & RouteComponentProps<Record<string, string>>;
+export type RouteComponent<P extends DefaultRouteProps = DefaultRouteProps> =
   | ComponentType<P>
   | LazyExoticComponent<ComponentType<P>>;
 
@@ -98,7 +98,7 @@ export interface BasicRouterItem {
 
   /**
    * @description path to rendered view component
-   * @type {ComponentType<RouteComponentProps<any>> | ComponentType<any>}
+   * @type {ComponentType<RouteComponentProps<Record<string, string>>> | ComponentType}
    * @default {} () => null;
    */
   component?: RouteComponent;
@@ -129,7 +129,7 @@ export interface BasicRouterItem {
   /**
    * @description route meta data, will pass to route component props
    */
-  meta?: Record<string | number | symbol, any>;
+  meta?: RouteMetaData;
 }
 
 export interface NestedRouteItem extends BasicRouterItem {
@@ -147,7 +147,7 @@ type customRendererParams = {
   /**
    * @description rendered router table, can use it directly
    */
-  renderedTable: ReactElement<any>;
+  renderedTable: ReactElement;
   /**
    * @description route list that matched with current path
    */

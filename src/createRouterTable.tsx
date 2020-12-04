@@ -30,7 +30,7 @@ function generateRedirectRouteProps(
 
 function renderRouteComponent(
   route: NestedRouteItem,
-  props: RouteComponentProps<any>,
+  props: RouteComponentProps,
   authorityChecker: CustomCheckAuthority,
   role?: Role,
 ): ReactElement {
@@ -69,7 +69,7 @@ function renderRouteComponent(
 
 type createRouterTableOptions = {
   role?: Role;
-  NotFound?: ComponentType<any>;
+  NotFound?: ComponentType;
   customCheckAuthority?: CustomCheckAuthority;
 };
 
