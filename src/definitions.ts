@@ -9,7 +9,7 @@ import { RouteComponentProps } from "react-router-dom";
 import { StaticContext } from "react-router";
 
 export interface EnhancedRouteComponentProps<
-  M extends Record<PropertyKey, string> = {},
+  M extends Record<PropertyKey, unknown> = {},
   Params extends { [K in keyof Params]?: string } = {},
   C extends StaticContext = StaticContext
 > extends RouteComponentProps<Params, C> {
