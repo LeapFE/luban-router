@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo, Suspense } from "react";
+import React, { FunctionComponent, useMemo, Suspense, ReactNode, CSSProperties } from "react";
 import { Switch, BrowserRouter, HashRouter, HashRouterProps, useLocation } from "react-router-dom";
 import { pathToRegexp } from "path-to-regexp";
 
@@ -15,6 +15,18 @@ import {
   MatchedRouterItem,
   CustomCheckAuthority,
 } from "./definitions";
+
+const suspenseFallbackStyle: CSSProperties = {
+  width: "100%",
+  height: "100%",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  fontSize: "0.4rem",
+  color: "#ccc",
+};
+
+const defaultFallback = <span style={suspenseFallbackStyle}>loading...</span>;
 
 function useMatchedRouteList(routeList: Array<BasicRouterItem>): Array<MatchedRouterItem> {
   const { pathname } = useLocation();
@@ -67,6 +79,7 @@ interface RouterTableProps {
   flattenRouteList: Array<BasicRouterItem>;
   routeList: Array<NestedRouteItem>;
   notFoundComponent: RouteComponent;
+  fallback: NonNullable<ReactNode> | null;
   role?: Role;
   customRender?: LubanRouterProps["children"];
   customCheckAuthority?: CustomCheckAuthority;
@@ -78,6 +91,7 @@ const RouterTable: FunctionComponent<RouterTableProps> = ({
   role,
   customRender,
   customCheckAuthority,
+  fallback,
 }) => {
   const routerTable = createRouterTable(flattenRouteList, {
     role,
@@ -88,7 +102,7 @@ const RouterTable: FunctionComponent<RouterTableProps> = ({
   const matchedRouteList = useMatchedRouteList(flattenRouteList);
 
   let appRouter = (
-    <Suspense fallback={<span>loading</span>}>
+    <Suspense fallback={fallback}>
       <Switch>{routerTable}</Switch>
     </Suspense>
   );
@@ -114,6 +128,7 @@ const LubanRouter: FunctionComponent<LubanRouterProps> = ({
   role,
   children,
   customCheckAuthority,
+  fallback = defaultFallback,
 }) => {
   const { routes, mode = "browser", basename = "/", hashType = "slash" } = config;
 
@@ -123,13 +138,14 @@ const LubanRouter: FunctionComponent<LubanRouterProps> = ({
 
   const hashRouterProps: HashRouterProps = { hashType, basename };
 
-  const RouteTableProps = {
+  const RouteTableProps: RouterTableProps = {
     routeList: routes,
     customRender: children,
     flattenRouteList,
     role,
     notFoundComponent,
     customCheckAuthority,
+    fallback,
   };
 
   return mode === "browser" ? (

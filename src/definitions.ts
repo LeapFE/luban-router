@@ -3,7 +3,7 @@
 // Definitions by: front-end-captain <https://github.com/LeapFE>
 // TypeScript Version: 3.8.3
 
-import { ComponentType, LazyExoticComponent, ReactElement } from "react";
+import { ComponentType, LazyExoticComponent, ReactElement, ReactNode } from "react";
 import { RouteComponentProps } from "react-router-dom";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { StaticContext } from "react-router";
@@ -184,4 +184,6 @@ export interface LubanRouterProps {
   children?: CustomRenderer;
   // custom authority checker
   customCheckAuthority?: CustomCheckAuthority;
+  /** A fallback react tree to show when a Suspense child (like React.lazy) suspends */
+  fallback?: NonNullable<ReactNode> | null;
 }
